@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title></title>
+	<link href="App/Themes/Css/login.css" rel="stylesheet" />
+	<script src="APP/Themes/Js/jquery-2.1.1.js"></script>
+</head>
+<body>
+<div>
+	<div id="head">
+	<div id="head_img"><img src="App/Themes/Image/dl_head.png"></div>	
+	</div>
+	<div id="content">
+		<div id="content_border">
+			<input type="text" id="username" name="user" placeholder="用户名">
+			<input type="password" id="password" name="password" placeholder="密码"><br/>
+			<button type="button" id="content_dl" onclick="login();"><img src="App/Themes/Image/dl_dl.png">
+			</button>
+			<button type="button" id="content_zc" onclick="window.location.href='?c=home&a=register'"><img src="App/Themes/Image/dl_zc.png"></button>
+		</div>
+		
+	</div>
+</div>
+</body>
+</html>
+
+<script type="text/javascript">
+function login() 
+{
+	$.ajax ({
+		type : "post",
+		url  : "?c=admin&a=checklogin",
+		data : {
+			username       : $("#username").val(),
+			password       : $("#password").val(),
+		},
+
+		success:function(data)
+		{
+			var json = JSON.parse(data);
+			if(json.status == "wu")
+			{
+				alert("请先填写！");
+			}
+			if(json.status == "no")
+			{
+				alert("用户名或密码错误！");
+			}
+			if(json.status == "ok")
+			{
+				window.location.href="?c=admin&a=index";
+			}
+		}
+	})
+
+}
+</script>

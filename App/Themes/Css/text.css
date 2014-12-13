@@ -1,0 +1,31 @@
+* {
+		margin: 0px;
+		padding: 0px;
+	}
+	body {
+		background-color: #669999;
+	}
+	.bg {
+		width: 800px;
+		height: 900px;
+		background-image: url("../Image/text1.png");
+		background-repeat: no-repeat;
+		margin: 60px auto;
+		padding-top: 20px;
+	}
+	p {
+		padding-top: 55px;
+		padding-left: 50px;
+		padding-right: 50px;
+		font-family: "幼圆";
+		font-size: 1.5em;
+		text-indent:2em;
+		white-space: normal;
+		line-height: 1.6em;
+	}
+	h1 {
+		width: 500px;
+		font-size: 7em;
+		padding-left: 270px;
+		color: #333;
+	}

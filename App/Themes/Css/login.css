@@ -1,0 +1,9 @@
+	* {margin: 0px;padding: 0px;}
+	body {width: 100%;height: 100%;}
+	#head {width: 100%;height: 120px;background-color: #448aca;}
+	#head_img {height: 120px;width: 250px;margin-left: 16%;background-color: #fff;text-align: center;}
+	#head_img img {margin-top: 8px;}
+	#content_border {width: 720px;height: 350px;border:10px solid #d1d1d1;border-radius:20px;-moz-border-radius:20px; margin: 80px auto;text-align: center;}
+	input {width: 400px;height: 40px;border:5px solid #d1d1d1;margin-top: 50px;font-size: 1.2em;text-indent: 1em;}
+	button {border: 0px;background: #fff;margin:40px 40px;width: 150px;height: 55px;cursor: pointer;}
+	button img {width: 150px;height: 55px;}

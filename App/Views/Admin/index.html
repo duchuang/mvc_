@@ -1,0 +1,100 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		 <title>管理系统</title>
+			    <script type="text/javascript" src="App/Themes/Lib/EasyUI/jquery.min.js"></script>
+			    <script type="text/javascript" src="App/Themes/Lib/EasyUI/jquery.easyui.min.js"></script>
+			    <script type="text/javascript" src="App/Themes/Lib/EasyUI/locale/easyui-lang-zh_CN.js"></script>
+			    <link href="App/Themes/Lib/EasyUI/themes/icon.css" rel="stylesheet" />
+			    <link href="App/Themes/Lib/EasyUI/themes/bootstrap/easyui.css" type="text/css" rel="stylesheet" />
+			    
+	</head>
+	<body class="easyui-layout">   
+    	<div data-options="region:'north',title:'后台管理',split:true,height:100" >
+		</div>   
+    	<!-- <div data-options="region:'south',title:'联系方式：18842656255 || duchuang188@gmail.com',split:true,height:50">
+    	</div>    -->
+        <!-- <div data-options="region:'east',iconCls:'icon-time',title:'Calender',split:true,width:200,height:300">
+        	<div id="cc" class="easyui-calendar" style="width:190px;height:210px;"></div>  
+		</div>  -->  
+    	<div data-options="region:'west',title:'West',split:true,width:200,height:300">
+    	    <div id="aa" class="easyui-accordion" data-options="fit:true">   
+	    		<div title="Title1" data-options="iconCls:'icon-help',fit:true"> 
+	    		<ul class="opul ">
+                    <li value="11" class="active">
+                        <img class="liimage" src="App/Themes/Image/managenews.png" />
+							新闻管理 
+                    </li>
+                
+                </ul>
+                	<style type="text/css">
+				        .opul li {
+				            width: 90%;
+				            height: 20px;
+				            margin-top: 15px;
+				            padding-top: 5px;
+				            text-align: center;
+				            cursor: pointer;
+				            -moz-user-select: none; /*火狐*/
+				            -webkit-user-select: none; /*webkit浏览器*/
+				            -ms-user-select: none; /*IE10*/
+				            -khtml-user-select: none; /*早期浏览器*/
+				            user-select: none;
+				            background-color: #F5F4F7;
+				        }
+
+				        .opul {
+				            margin-left: -30px;
+				            list-style: none;
+				        }
+
+				        .active {
+				            color: red;
+				            border: 1px solid #000;
+				        }
+
+				        .liimage {
+				            vertical-align: middle;
+				        }
+        			</style>
+                 
+	    			
+	    		</div>   
+			    
+		    </div>  
+    	</div>   
+    	<div id="center"  data-options="region:'center',title:'center title'">
+		</div>   
+	</body>  
+</html>
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$("#aa").find("li").click(function(){
+			request($(this).val());
+		});
+	});
+	function request(value)
+	{
+		switch(value)
+		{
+			case 11:$("#center").panel({content:"玩命加载中..."});AddView();break;
+		}
+	}
+	function AddView()
+	{
+		$.ajax({
+			type:"post",
+			url:"?c=admin&a=newsManage",
+			// data:{
+
+			// },
+
+			success:function(data)
+			{
+				$("#center").panel({content:data});
+			}
+		});
+	}
+</script>

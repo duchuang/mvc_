@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>注册</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="App/Themes/Css/register.css" rel="stylesheet" />
+	<script src="App/Themes/Js/jquery-2.1.1.js"></script>
+	<script src="App/Themes/Js/register.js"></script>
+</head>
+<body>
+<div>
+	<div id="head">
+	<div id="head_img"><img src="App/Themes/Image/zc_head.png"></div>	
+	</div>
+	<div id="content">
+		<!-- <form> -->
+		<label>用户名：</label><input id="user" type="text"><br /><span id="user_message">&nbsp;</span><br/>
+		<label>密码：</label><input id="password"  type="password"><br /><span id="password_message">&nbsp;</span><br/>
+		<label>密码确认：</label><input id="password_again" type="password"><br /><span id="password_message_again">&nbsp;</span><br/>
+		<label>邮箱：</label><input id="email" type="text"><br /><span id="email_mes">&nbsp;</span><br/>
+		<label >验证码：</label><input id="yz" type="text" name="checkCode"><img id="yz_img" src="?c=Home&a=Code" onclick="this.src='?c=Home&a=Code&r='+Math.random()"><br/>
+		<button id="confirm" onclick="confirm();">确认注册</button>
+	<!-- </form> -->
+	</div>
+</div>
+</body>
+</html>
+
+<script type="text/javascript">
+function confirm()
+{	
+	$.ajax ({
+		type :"post",
+		url  :"?c=home&a=checkregister",
+		data :{
+			user           : $("#user").val(),
+			password       : $("#password").val(),
+			password_again : $("#password_again").val(),
+			email          : $("#email").val(),
+			yz             : $("#yz").val(),
+		},
+
+		success:function(data)
+		{
+			var json = JSON.parse(data);
+			if(json.status == "yz")
+			{
+				alert("验证码错误！");
+			}
+			if(json.status == "psd")
+			{
+				alert("两次密码不一致！");
+			}
+			if(json.status == "user")
+			{
+				alert("用户名已存在！");
+			}
+			if(json.status == "tian")
+			{
+				alert("填写信息不符合要求！");
+			}
+			if(json.status == "ok")
+			{
+				alert("注册成功！");
+			}
+			if(json.status == "no")
+			{
+				alert("注册失败！");
+			}
+		}
+	});
+}
+
+</script>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title> 
+    <style>
+        #win
+        {
+            overflow: hidden;
+        }
+    </style>
+    <script charset="utf-8" src="App/Themes/Lib/kindeditor-4.1.10/kindeditor.js"></script>
+    <script charset="utf-8" src="App/Themes/Lib/kindeditor-4.1.10/lang/zh_CN.js"></script>
+</head>
+    <body>
+    <!-- 查 -->
+        <table id="dg">   
+        </table>
+        <!-- 增 -->
+    </body>
+</html>
+
+<script type="text/javascript">
+
+$('#dg').datagrid({
+    url:"?c=admin&a=newsManageList",
+    striped:true,
+    rownumbers:true,
+    singleSelect:true,
+    fit:true,
+    fitColumns:true,
+    pagination:true,
+    toolbar: 
+    [   {
+            iconCls: 'icon-add',
+            handler: function(){addNews();}
+        },'-',
+        {
+            iconCls: 'icon-edit',
+            handler: edit
+        },'-',
+        {
+            iconCls: 'icon-remove',
+            handler: function(){deleteNews();}
+        }
+    ],
+    columns:[[  
+        {field:'user_id',title:'User ID',width:80,sortable:true,hidden:true}, 
+        {field:'news_id',title:'News ID',width:80,sortable:true,hidden:true},
+        {field:'news_class',title:'新闻类型',width:80,sortable:true},   
+        {field:'news_title',title:'标题',width:80,sortable:true},   
+        {field:'news_summary',title:'摘要',width:80,sortable:true},   
+        {field:'news_picture',title:'图片名',width:80,sortable:true},   
+        {field:'news_content',title:'新闻内容',width:80,sortable:true},   
+        {field:'news_time',title:'发布时间',width:80,sortable:true}       
+    ]]
+});
+
+function addNews()
+{
+    $("body").append("<div id='win'><iframe scrolling='no' width=100% height=100% src='?c=Admin&a=addEditorNews'></iframe></div>");
+    $('#win').window({
+        width:750,    
+        height:380,
+        fit:true,    
+        modal:true,
+    });
+}
+
+function edit()
+{
+    if(($("#dg").datagrid("getSelected").news_id)) 
+    {
+        $("body").append("<div id='win'><iframe scrolling='no' width=100% height=100% src='?c=Admin&a=addEditorNews&id="+$("#dg").datagrid("getSelected").news_id+"'></iframe></div>");
+        $('#win').window({
+            width:750,    
+            height:380,
+            fit:true,    
+            modal:true,
+        });
+    }
+}
+
+function deleteNews()
+{
+    //alert($("#dg").datagrid("getSelected").news_id);
+
+    if(($("#dg").datagrid("getSelected").news_id)) {
+        
+        $.messager.confirm('提示消息', '您确认删除吗？', function(r) 
+        {
+            if (r) 
+            {
+                $.ajax ({
+                    type:"post",
+                    url:"?c=admin&a=deleteNews",
+                    data:{
+                        id:$("#dg").datagrid("getSelected").news_id
+                        },
+
+                    success:function(data) 
+                    {
+                        var json = JSON.parse(data);
+                        if( json.status == "ok") 
+                        {
+                            $.messager.alert('提示消息','删除成功！','info');
+                            $('#dg').datagrid('load',null);
+                        }
+                        else 
+                        {
+                            $.messager.alert('提示消息','删除失败！','info');
+                        }
+                    }
+                });
+            }
+        });
+    }
+} 
+</script>

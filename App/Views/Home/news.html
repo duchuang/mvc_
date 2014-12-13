@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>新闻</title>
+<meta charset="UTF-8">
+<link href="App/Themes/Css/news.css" rel="stylesheet" />
+<script src="App/Themes/Js/jquery-2.1.1.js"></script>
+<script src="App/Themes/Js/news.js"></script>
+</head>
+<body>
+<div id="all">
+	<div id="head">
+		<img src="App/Themes/Image/11.png">
+	</div>
+	<div id="head_join">
+		<img src="App/Themes/Image/news.png" id="news_dis">
+	</div>
+	<div id="content">
+		@foreach_news
+		<div class="news">
+		<img src="@news_picture">
+			<h2><a href="?c=home&a=newsContent" target="_blank">@news_title</a></h2>
+			<div class="text">
+				<h5>@news_summary</h5>
+			</div>
+		</div>
+		@forend_news
+		<!-- <div class="news">
+		<img src="App/Themes/Image/news_bg3.png">
+			<h2><a href="text.html" target="_blank">招新通知</a></h2>
+			<div id="text">
+				<h5>12月5日，由张一白执导，彭于晏、倪妮和郑恺等人主演的青春爱情片《匆匆那年》在国内公映，首日票房超过5000万，加上此前2000万的点映票房，累计超过7000万，只用一天时间就超过了上映多日的《太平轮》（上），后者可是耗资数亿、明星云集的史诗巨制。</h5>
+			</div>
+		</div>
+		<div class="news">
+		<img src="App/Themes/Image/news_bg2.png">
+			<h2><a href="text.html" target="_blank">招新通知</a></h2>
+			<div id="text">
+				<h5>12月5日，由张一白执导，彭于晏、倪妮和郑恺等人主演的青春爱情片《匆匆那年》在国内公映，首日票房超过5000万，加上此前2000万的点映票房，累计超过7000万，只用一天时间就超过了上映多日的《太平轮》（上），后者可是耗资数亿、明星云集的史诗巨制。</h5>
+			</div>
+		</div>
+		<div class="news">
+		<img src="App/Themes/Image/news_bg1.png">
+			<h2><a href="text.html" target="_blank">招新通知</a></h2>
+			<div id="text">
+				<h5>12月5日，由张一白执导，彭于晏、倪妮和郑恺等人主演的青春爱情片《匆匆那年》在国内公映，首日票房超过5000万，加上此前2000万的点映票房，累计超过7000万，只用一天时间就超过了上映多日的《太平轮》（上），后者可是耗资数亿、明星云集的史诗巨制。</h5>
+			</div> -->
+		<!-- </div>
+		<div class="news">
+		<img src="App/Themes/Image/news_bg2.png">
+			<h2><a href="text.html" target="_blank">招新通知</a></h2>
+			<div id="text">
+				<h5>12月5日，由张一白执导，彭于晏、倪妮和郑恺等人主演的青春爱情片《匆匆那年》在国内公映，首日票房超过5000万，加上此前2000万的点映票房，累计超过7000万，只用一天时间就超过了上映多日的《太平轮》（上），后者可是耗资数亿、明星云集的史诗巨制。</h5>
+			</div>
+		</div>
+		<div class="news">
+		<img src="App/Themes/Image/news_bg2.png">
+			<h2><a href="text.html" target="_blank">招新通知</a></h2>
+			<div id="text">
+				<h5>12月5日，由张一白执导，彭于晏、倪妮和郑恺等人主演的青春爱情片《匆匆那年》在国内公映，首日票房超过5000万，加上此前2000万的点映票房，累计超过7000万，只用一天时间就超过了上映多日的《太平轮》（上），后者可是耗资数亿、明星云集的史诗巨制。</h5>
+			</div>
+		</div> -->
+	</div>
+</div>
+<div>
+	<footer>	
+		<h3 id="view">View More</h3>
+	</footer>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+var page=1;
+$(document).ready(function() {
+	$("#view").click(function() {
+		$.ajax ({
+			type : "post",
+			url  : "?c=home&a=newsMore",
+			data : {
+				page      : ++page,
+			},
+			success:function(data)
+			{
+				var json = JSON.parse(data);
+				
+				if(json.status == "no")
+				{
+					alert("相册以全部显示！");
+				}
+				else
+				{
+					for(var x in json.row)
+					{
+						// alert(json.row[x].news_picture)
+						$('#content').append("<div class=\"news\"><img src=\""+json.row[x].news_picture+"\"><h2><a href=\"?c=home&a=newsContent\" target=\"_blank\">"+json.row[x].news_title+"</a></h2><div class=\"text\"><h5>"+json.row[x].news_summary+"</h5></div></div>");
+					}	
+				}
+			}
+		});
+	});
+});
+</script>

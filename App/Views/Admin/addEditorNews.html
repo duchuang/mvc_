@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="App/Themes/Lib/EasyUI/jquery.min.js"></script>
+	<script type="text/javascript" src="App/Themes/Lib/EasyUI/jquery.easyui.min.js"></script>
+			    <script type="text/javascript" src="App/Themes/Lib/EasyUI/locale/easyui-lang-zh_CN.js"></script>
+			    <link href="App/Themes/Lib/EasyUI/themes/icon.css" rel="stylesheet" />
+			    <link href="App/Themes/Lib/EasyUI/themes/bootstrap/easyui.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+
+<textarea id="editor_id" name="content" style="width:700px;height:300px;">@news_content</textarea>
+
+<table><tr><td>类型：<input type="text" id="cla">@news_class</td></tr>
+                        <tr><td>标题：<input type="text" id="title">@news_class</td></tr>
+                        <tr><td>摘要：<input type="text" id="summary">@news_title</td></tr>
+                        <tr><td>图片：<input type="text" id="picture">@news_picture</td></tr>
+                        <input type="button" value="添加" onclick="add();"></table>
+                        <input type="button" value="修改" onclick="edit();"></table>
+
+<script charset="utf-8" src="App/Themes/Lib/kindeditor-4.1.10/kindeditor.js"></script>
+<script charset="utf-8" src="App/Themes/Lib/kindeditor-4.1.10/lang/zh_CN.js"></script>
+<script>
+		KindEditor.ready(function(K) {
+                window.editor = K.create('#editor_id');
+        });
+</script>
+
+</body>
+</html>
+<script type="text/javascript">
+
+function add()
+{
+    $.ajax({
+        type : "post",
+        url  : "?c=admin&a=addNews",
+        data : {
+            cla     : $('#cla').val(),
+            title   : $('#title').val(),
+            summary : $('#summary').val(),
+            picture : $('#picture').val(),
+            content : editor.html()
+        },
+        success : function(data)
+        {
+            var json = JSON.parse(data);
+            if(json.status == "ok")
+            {
+                $.messager.alert('提示消息','添加成功！','info');
+                $("#win").window("close",false);
+                $('#dg').datagrid('reload',null);
+            } else
+            {
+                $.messager.alert('提示消息','添加失败！','info');
+            }
+        }
+    })
+}
+
+function edit()
+{
+    $.ajax({
+        type : "post",
+        url  : "?c=admin&a=editNews",
+        data : {
+            cla     : $('#cla').val(),
+            title   : $('#title').val(),
+            summary : $('#summary').val(),
+            picture : $('#picture').val(),
+            content : editor.html(),
+            id      : '@news_id'
+        },
+        success : function(data)
+        {
+            var json = JSON.parse(data);
+            if(json.status == "ok")
+            {
+                $.messager.alert('提示消息','修改成功！','info');
+                $("#win").window("close",false);
+                $('#dg').datagrid('reload',null);
+            } else
+            {
+                $.messager.alert('提示消息','修改失败！','info');
+            }
+        }
+    })
+}
+
+</script>
